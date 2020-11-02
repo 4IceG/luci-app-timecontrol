@@ -1,0 +1,50 @@
+msgid "Internet Time Control"
+msgstr "Kontrola czasu w internecie"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Enabled"
+msgstr "Włączone"
+
+msgid "Running"
+msgstr "Działa"
+
+msgid "Not Running"
+msgstr "Nie działa"
+
+msgid "Client Settings"
+msgstr "Ustawienia klienta"
+
+msgid "Collecting data..."
+msgstr "Zbieranie danych..."
+
+msgid "No Internet start time"
+msgstr "Blokuj od"
+
+msgid "No Internet end time"
+msgstr "Blokuj do"
+
+msgid "Internet disabling settings for clients."
+msgstr "Ustawienia braku dostępu do internetu dla klientów."
+
+msgid "Mo"
+msgstr "Pn."
+
+msgid "Tu"
+msgstr "Wt."
+
+msgid "We"
+msgstr "Śr."
+
+msgid "Th"
+msgstr "Czw."
+
+msgid "Fr"
+msgstr "Pt."
+
+msgid "Sa"
+msgstr "Sob."
+
+msgid "Su"
+msgstr "Niedz."
