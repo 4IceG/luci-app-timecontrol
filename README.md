@@ -5,6 +5,8 @@
 ![GitHub forks](https://img.shields.io/github/forks/4IceG/luci-app-timecontrol?style=flat-square)
 ![GitHub All Releases](https://img.shields.io/github/downloads/4IceG/luci-app-timecontrol/total)
 
+A useful package for parents. Internet time control for clients (children) by MAC address. 
+
 ### Preview
 
 ![](https://raw.githubusercontent.com/4IceG/Personal_data/master/timecontrol.gif)
