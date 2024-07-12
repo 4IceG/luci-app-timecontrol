@@ -1,0 +1,50 @@
+msgid "Internet Time Control"
+msgstr "客户端联网时间控制"
+
+msgid "Status"
+msgstr "状态"
+
+msgid "Enabled"
+msgstr "启用"
+
+msgid "Running"
+msgstr "正在运行"
+
+msgid "Not Running"
+msgstr "未运行"
+
+msgid "Client Settings"
+msgstr "客户端设置"
+
+msgid "Collecting data..."
+msgstr "正在收集数据..."
+
+msgid "No Internet start time"
+msgstr "禁止联网开始时间"
+
+msgid "No Internet end time"
+msgstr "禁止联网结束时间"
+
+msgid "Internet disabling settings for clients."
+msgstr "客户端联网禁用设置"
+
+msgid "Mo"
+msgstr "周一"
+
+msgid "Tu"
+msgstr "周二"
+
+msgid "We"
+msgstr "周三"
+
+msgid "Th"
+msgstr "周四"
+
+msgid "Fr"
+msgstr "周五"
+
+msgid "Sa"
+msgstr "周六"
+
+msgid "Su"
+msgstr "周日"
