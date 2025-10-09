@@ -4,10 +4,8 @@ START=99
 CONFIG=timecontrol
 
 # 注册额外命令（关键添加部分）
-EXTRA_COMMANDS="scan"
-EXTRA_HELP="       scan            Scan and update MAC addresses (add 'showlogs' for detailed output)"
-
 EXTRA_COMMANDS="scan enforce"
+EXTRA_HELP="scan: Scan and update MACs\nenforce: Enforce time control"
 EXTRA_HELP="        scan            Scan and update MAC addresses
         enforce         Enforce time control by clearing connections"
 
@@ -366,14 +364,16 @@ setup_cron_job() {
 
 # ★ 新增 enforce 命令（強制執行）
 enforce() {
-	local count=$(uci show $CONFIG 2>/dev/null | grep "=macbind" | wc -l)
-	[ "$count" -eq 0 ] && return 0
+        local count=$(uci show $CONFIG 2>/dev/null | grep "=macbind" | wc -l)
+        [ "$count" -eq 0 ] && return 0
 
-	count=$((count - 1))
-	local now_hour=$(date +%H)
-	local now_min=$(date +%M)
-	local now_minutes=$((10#$now_hour * 60 + 10#$now_min))
-	local any_block=0
+        count=$((count - 1))
+        local now_hour=$(date +%H)
+        local now_min=$(date +%M)
+        [ -z "$now_hour" ] && now_hour=0
+        [ -z "$now_min" ] && now_min=0
+        local now_minutes=$((now_hour * 60 + now_min))
+        local any_block=0
 
 	for i in $(seq 0 $count); do
 		local enable=$(uci -q get $CONFIG.@macbind[$i].enable)
@@ -408,4 +408,3 @@ enforce() {
 
 	[ "$any_block" -eq 0 ] && return 0
 }
-

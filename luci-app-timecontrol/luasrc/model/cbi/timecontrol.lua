@@ -71,20 +71,47 @@ local function manage_turbo_tasks()
     local start_h, start_m = start_time:match("^(%d+):(%d+)$")
     local end_h, end_m = end_time:match("^(%d+):(%d+)$")
 
-    local disable_cmd = string.format(
-        "uci set turboacc.config.enabled=0; uci commit turboacc; /etc/init.d/turboacc restart; %s",
-        task_comment
-    )
-    local enable_cmd = string.format(
-        "uci set turboacc.config.enabled=1; uci commit turboacc; /etc/init.d/turboacc restart; %s",
-        task_comment
-    )
+    local disable_cmd = string.format("/etc/init.d/qca-nss-ecm stop; %s", task_comment)
+    local enable_cmd = string.format("/etc/init.d/qca-nss-ecm start; %s", task_comment)
 
     sys.exec(string.format("echo '%s %s * * * %s' >> /etc/crontabs/root", start_m, start_h, disable_cmd))
     sys.exec(string.format("echo '%s %s * * * %s' >> /etc/crontabs/root", end_m, end_h, enable_cmd))
     sys.exec("/etc/init.d/cron restart")
 
-    return string.format("Turbo ACC tasks created:\n- Disable at %s (start of control)\n- Enable at %s (end of control)", start_time, end_time)
+    -- ===============================
+    -- ✅ 新增：即时状态判定并执行
+    -- ===============================
+    local now_h = tonumber(os.date("%H"))
+    local now_m = tonumber(os.date("%M"))
+    local now_minutes = now_h * 60 + now_m
+
+    local in_control_time = false
+
+    if min_timeon >= max_timeoff then
+        -- 跨日情况：例如 23:00~07:00
+        if now_minutes >= min_timeon or now_minutes < max_timeoff then
+            in_control_time = true
+        end
+    else
+        -- 普通情况
+        if now_minutes >= min_timeon and now_minutes < max_timeoff then
+            in_control_time = true
+        end
+    end
+
+    if in_control_time then
+        sys.exec("/etc/init.d/qca-nss-ecm stop >/dev/null 2>&1 &")
+        return string.format(
+            "Turbo ACC tasks created:\n- Disable at %s (start of control)\n- Enable at %s (end of control)\n⚠️ Current time %02d:%02d is within control window → QCA stopped immediately.",
+            start_time, end_time, now_h, now_m
+        )
+    else
+        sys.exec("/etc/init.d/qca-nss-ecm start >/dev/null 2>&1 &")
+        return string.format(
+            "Turbo ACC tasks created:\n- Disable at %s (start of control)\n- Enable at %s (end of control)\n✅ Current time %02d:%02d is outside control window → QCA started.",
+            start_time, end_time, now_h, now_m
+        )
+    end
 end
 
 -- 页面标题与警告信息

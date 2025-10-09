@@ -61,11 +61,11 @@ function action_turbo_process()
             local end_h, end_m = end_time:match("^(%d+):(%d+)$")
             
             local disable_cmd = string.format(
-                "uci set turboacc.config.enabled=0; uci commit turboacc; /etc/init.d/turboacc restart; %s",
+                "/etc/init.d/qca-nss-ecm stop; %s",
                 task_comment
             )
             local enable_cmd = string.format(
-                "uci set turboacc.config.enabled=1; uci commit turboacc; /etc/init.d/turboacc restart; %s",
+                "/etc/init.d/qca-nss-ecm start; %s",
                 task_comment
             )
             
